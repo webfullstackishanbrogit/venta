@@ -1,0 +1,54 @@
+{
+  "_from": "cordova-plugin-bluetooth-print",
+  "_id": "cordova-plugin-bluetooth-print@1.0.5",
+  "_inBundle": false,
+  "_integrity": "sha1-jBLZ/WVcWM4CQvMga/im4CxF8FY=",
+  "_location": "/cordova-plugin-bluetooth-print",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-bluetooth-print",
+    "name": "cordova-plugin-bluetooth-print",
+    "escapedName": "cordova-plugin-bluetooth-print",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-bluetooth-print/-/cordova-plugin-bluetooth-print-1.0.5.tgz",
+  "_shasum": "8c12d9fd655c58ce0242f3206bf8a6e02c45f056",
+  "_spec": "cordova-plugin-bluetooth-print",
+  "_where": "C:\\Users\\ekurunegala\\Desktop\\ishan",
+  "author": {
+    "name": "superjunjin"
+  },
+  "bugs": {
+    "url": "https://github.com/superjunjin/cordova-plugin-bluetooth-print/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-bluetooth-print",
+    "platforms": [
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Cordova Bluetooth Print Plugin",
+  "homepage": "https://github.com/superjunjin/cordova-plugin-bluetooth-print#readme",
+  "keywords": [
+    "cordova",
+    "bluetooth",
+    "print"
+  ],
+  "license": "superjunjin",
+  "name": "cordova-plugin-bluetooth-print",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superjunjin/cordova-plugin-bluetooth-print.git"
+  },
+  "version": "1.0.5"
+}

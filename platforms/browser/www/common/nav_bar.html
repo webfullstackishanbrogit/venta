@@ -1,0 +1,77 @@
+<script type="text/javascript">
+
+    //load_bro();
+
+    if (!$.session.get("user_name")) {
+	window.location.replace("index.html");
+    } else {
+
+
+
+	var user_name = $.session.get("user_name");
+
+
+
+
+
+	$("#session_name").text(user_name);
+
+
+
+    }
+
+
+</script>
+<div id="navbar" class="navbar navbar-default          ace-save-state">
+    <div class="navbar-container ace-save-state" id="navbar-container">
+
+
+	<div class="navbar-header pull-left">
+	    <a href="#" class="navbar-brand">
+		<small>
+		    <img class="nav-user-photo" src="img/cmx_logo.png"  style="width:40px;height:25px; vertical-align:text-top;"/>
+		    VENTA
+		</small>
+	    </a>
+	    <div class="pull-right">
+		<ul class="nav ace-nav " >
+
+
+
+
+		    <li class=" dropdown-modal">
+			<!--<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+				<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+				<span class="badge badge-success">5</span>
+			</a>-->
+			<a href="index.html">
+			    <i class="ace-icon fa fa-power-off"></i>
+			    Logout
+			</a>
+
+
+		    </li>
+
+		    <li class="light-blue dropdown-modal">
+			<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+			    <img class="nav-user-photo" src="img/user.png" alt="Jason's Photo" />
+			    <span class="user-info">
+				<small>Welcome,</small>
+				<span id="session_name"></span>
+			    </span>
+
+
+
+			</a>
+
+
+		    </li>
+		</ul>
+	    </div>
+	</div>
+
+
+    </div><!-- /.navbar-container -->
+</div>
+
+

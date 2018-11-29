@@ -1,0 +1,12 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "CMX",
+  "short_name": "CMX",
+  "version": "com.cmx.app",
+  "description": "CMX.",
+  "author": "CMX Team",
+  "icons": [],
+  "orientation": "portrait",
+  "start_url": "index.html"
+}

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta charset="utf-8"/>
+
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        <meta name="author" content="">
+
+	<style>
+	    @media (max-width: 978px) {
+		.submit-form {
+		    padding:0;
+		    margin-top:15px;
+		}
+
+
+
+
+	    </style>
+	    <!-- bootstrap & fontawesome -->
+	    <link rel="stylesheet" href="assets/css/bootstrap.min.css"/>
+	    <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css"/>
+	    <link rel="stylesheet" href="assets/css/ionicons.min.css"/>
+	    <link rel="stylesheet" href="assets/css/fonts.googleapis.com.css"/>
+	    <link rel="stylesheet" href="assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style"/>
+	    <link rel="stylesheet" href="assets/css/ace-skins.min.css"/>
+	    <link rel="stylesheet" href="post_ad/css/style.css"/>
+	    <link rel="stylesheet" href="assets/css/ace-rtl.min.css"/>
+	    <script src="assets/js/ace-extra.min.js"></script>
+	    <script src="assets/js/jquery-2.1.4.min.js"></script>
+	    <script src="cordova.js"></script>
+	    <script src="assets/js/jquery.session.js"></script> 
+	    <script src="js/jquery.simulate.js"></script>
+
+	    <link rel="stylesheet" href="bootstrap-sweetalert/lib/sweet-alert.css" />
+
+
+	    <script>
+		$(function () {
+		    $("#nav_bar").load("common/nav_bar.html");
+
+		});
+	    </script>
+	    <script type="text/javascript">
+		//document.addEventListener("deviceready", GetGeoLocation, false);
+		$(document).ready(function () {
+
+
+		    if (!$.session.get("user_name")) {
+			window.location.replace("index.html");
+		    } else {
+			var user_name = $.session.get("user_name");
+			$("#session_name").text(user_name);
+			
+			
+			var myDB = window.sqlitePlugin.openDatabase({name: "cmx.db", location: 'default'});
+			myDB.transaction(function (transaction) {
+			    //transaction.executeSql('CREATE TABLE IF NOT EXISTS stock (id integer primary key, Unit_Cost numeric, dr_qty numeric,cr_qty numeric,ref integer,status text,s_price numeric,stock_card text,stores numeric,p_price numeric,unit_vat numeric,l_dis numeric,descrip text,line_dis numeric,unit_price numeric,tym numeric,foc numeric,flg numeric,r_price numeric,w_price numeric,br numeric)', [],
+			    transaction.executeSql('CREATE TABLE IF NOT EXISTS stock_card (id integer primary key, descrip numeric, m_stock integer,stock_book integer,stock_cat integer,sales_p numaric,date numaric,wprice numeric,sales_p_max numaric,wpric_max numeric,rack_location text,stock_card text,reorder integer,max_order integer,flag integer,units integer,pack_sale numeric,pack_rest numeric,flag2 integer,disp integer,disamt integer,stock_cat2 integer)', [],
+				    function (tx, result) {
+
+				    },
+				    function (error) {
+					$("#loading").fadeOut();
+					swal("Something Went Wrong", "Error occurred while creating the table", "warning");
+				    });
+			});
+
+			myDB.transaction(function (transaction) {
+			    transaction.executeSql('CREATE TABLE IF NOT EXISTS stock (id integer primary key, Unit_Cost numeric, dr_qty numeric,cr_qty numeric,ref integer,status text,s_price numeric,stock_card text,stores numeric,p_price numeric,unit_vat numeric,l_dis numeric,descrip text,line_dis numeric,unit_price numeric,tym numeric,foc numeric,flg numeric,r_price numeric,w_price numeric,br numeric,flag numeric,m_grd numeric,inv numeric,expire numeric,exp_flag numeric,cus_id numeric)', [],
+				    function (tx, result) {
+
+
+				    },
+				    function (error) {
+					$("#loading").fadeOut();
+					swal("Something Went Wrong", "Error occurred while creating the table", "warning");
+				    });
+			});
+
+			myDB.transaction(function (transaction) {
+			    //transaction.executeSql('CREATE TABLE IF NOT EXISTS stock (id integer primary key, Unit_Cost numeric, dr_qty numeric,cr_qty numeric,ref integer,status text,s_price numeric,stock_card text,stores numeric,p_price numeric,unit_vat numeric,l_dis numeric,descrip text,line_dis numeric,unit_price numeric,tym numeric,foc numeric,flg numeric,r_price numeric,w_price numeric,br numeric)', [],
+			    transaction.executeSql('CREATE TABLE IF NOT EXISTS stock_orders (id integer primary key, date numeric, sup_acc text,discount numeric,type text,invoice integer,login text,ref integer,p_order integer,job text,cashier text,sales_return integer,gatepass integer,salemen text,loading text,unloading text,csh numeric,crdt numeric,sum_id integer,dis_amt numeric,l_amt numeric,pro integer,pack_no integer,br numeric,agent_id numeric,flag numeric,cus_id integer,total numeric,qty numeric,stock_card text,foc numeric,cash numeric,cheque numeric,cheque_no numeric,cheque_date numeric,due numeric,bank text)', [],
+				    function (tx, result) {
+
+				    },
+				    function (error) {
+					$("#loading").fadeOut();
+					swal("Something Went Wrong", "Error occurred while creating the table", "warning");
+				    });
+			});
+
+			myDB.transaction(function (transaction) {
+			    transaction.executeSql('CREATE TABLE IF NOT EXISTS increment_inv (id integer primary key, inv_id integer,ref integer,auto integer)', [],
+				    function (tx, result) {
+
+				    },
+				    function (error) {
+					$("#loading").fadeOut();
+					swal("Something Went Wrong", "Error occurred while creating the table", "warning");
+				    });
+			});
+
+
+
+		    }
+
+
+		});
+
+
+		function session_des()
+		{
+		    //var user = $.session.get("user");
+		    //alert(user);	
+		    $.session.clear();
+		    //document.location.href="http://yoursite.com"+ document.getElementById('somefield');
+
+		    location.href = "index.html";
+		}
+
+
+
+
+	    </script> 
+
+
+
+
+
+
+	</head>
+
+	<body class="no-skin">
+
+
+	    <!-- nav bar-->
+
+	    <div id="nav_bar"></div>
+
+
+
+
+
+	    <!-- nav bar-->
+
+
+
+
+
+	    <div class="main-container ace-save-state" id="main-container"> 
+		<script type="text/javascript">
+		    try {
+			ace.settings.loadState('main-container')
+		    } catch (e) {
+		    }
+		</script>
+
+		<div class="main-content">
+
+
+
+		    <div class="main-content-inner">
+			<div class="breadcrumbs ace-save-state" id="breadcrumbs" >
+			    <ul class="breadcrumb">
+
+				<li><i class="ace-icon fa fa-home home-icon"></i> <a href="#"><b>Home</b></a></li>
+
+
+			    </ul>
+			    <!-- /.breadcrumb -->
+
+			    <div class="nav-search" id="nav-search">
+				<form class="form-search">
+				    <span class="input-icon">
+					<input type="text" placeholder="Search..." class="nav-search-input"
+					       id="nav-search-input" autocomplete="off"/>
+					<i class="ace-icon fa fa-search nav-search-icon"></i> </span>
+				</form>
+			    </div>
+
+			    <!-- /.nav-search --> 
+			</div>
+			<div class="page-content">
+
+			    <!-- /.ace-settings-container -->
+			    <div class="row">
+
+
+
+
+				<div class="col-lg-12 col-sm-12 col-xs-12">
+
+                                <h3 class="header smaller lighter green">First</h3>
+				    <div class="row" style=" padding-top: 10px;">
+                                        
+                                        
+                                        <div class="col-md-4 col-sm-4 col-xs-4" >
+					    <a href="suppliers.html" class="btn btn-app btn-pink " style="width:100%; height:120px;" >
+						<!--<i class="ace-icon fa fa-list-alt "></i>-->
+						<img width="40" src="img/supplier.png" alt=""><br/>
+						Create <br/>Suppliers
+					    </a>
+
+
+
+					</div>
+                                        
+                                        <div class="col-md-4 col-sm-4 col-xs-4" >
+					    <a href="items.html" class="btn btn-app btn-" style="width:100%; height:120px;">
+						<!--<i class="ace-icon fa fa-credit-card "></i>-->
+						<img width="40" src="img/item.png" alt=""><br/>
+						Create <br/>Items
+					    </a>
+
+
+
+					</div>
+                                        
+                                        <div class="col-md-4 col-sm-4 col-xs-4" >
+					    <a href="grn.html" class="btn btn-app btn-danger" style="width:100%; height:120px;" >
+						<!--<i class="ace-icon fa fa-list-alt "></i>-->
+						<img width="40" src="img/stock.png" alt=""><br/>
+						GRN 
+					    </a>
+
+
+
+					</div>
+                                        
+					
+
+					
+
+				    </div>
+                                
+                                <h3 class="header smaller lighter green">Second</h3>
+				    
+				    <div class="row" style="padding-top: 10px;">
+					
+                                        <div class="col-md-4 col-sm-4 col-xs-4" >
+					    <a href="customers.html" class="btn btn-app btn-default" style="width:100%; height:120px;" >
+						<!--<i class="ace-icon fa fa-list-alt "></i>-->
+						<img width="40" src="img/dealer.png" alt=""><br/>
+						Create <br/>Customers
+					    </a>
+
+
+
+					</div>
+
+					
+
+					<div class="col-md-4 col-sm-4 col-xs-4" >
+					    <a href="invoice.html" class="btn btn-app btn-info " style="width:100%; height:120px;" >
+						<!--<i class="ace-icon fa fa-list-alt "></i>-->
+						<img width="40" src="img/sale.png" alt=""><br/>
+						Sale
+					    </a>
+
+
+
+					</div>
+
+                                        <div class="col-md-4 col-sm-4 col-xs-4" >
+					    <a href="invoice.html" class="btn btn-app btn-yellow" style="width:100%; height:120px;" >
+						<!--<i class="ace-icon fa fa-list-alt "></i>-->
+						<img width="40" src="img/return_item.png" alt=""><br/>
+						Sale<br/>Return
+					    </a>
+
+
+
+					</div>
+					
+
+				    </div>
+				    
+                                <h3 class="header smaller lighter green">Other</h3>
+                                
+				    <div class="row" style="padding-top: 10px;">
+					<div class="col-md-4 col-sm-4 col-xs-4" >
+					    <a href="settings.html" class="btn btn-app btn-success" style="width:100%; height:120px;" >
+						<!--<i class="ace-icon fa fa-list-alt "></i>-->
+						<img width="40" src="img/settings.png" alt=""><br/>
+						Settings
+					    </a>
+
+
+
+					</div>
+
+					<div class="col-md-4 col-sm-4 col-xs-4" >
+					    <a href="reports.html" class="btn btn-app btn-inverse" style="width:100%; height:120px;">
+						<!--<i class="ace-icon fa fa-credit-card "></i>-->
+						<img width="40" src="img/analytics.png" alt=""><br/>
+						Reports
+					    </a>
+
+
+
+					</div>
+
+
+					
+
+				    </div>
+
+
+				</div>
+
+
+				<input placeholder="Name" class="form-control" id="hid_ref_id" style="display:none"/>
+				<input placeholder="Name" class="form-control" id="hid_expire_id" style="display:none"/>
+				<input placeholder="Name" class="form-control" id="hid_ref_second_id" style="display:none"/>
+				<input placeholder="Name" class="form-control" id="hid_ref_second1_id" style="display:none"/>
+
+
+
+
+
+
+
+
+
+				<div class="col-md-4 ">
+
+
+
+
+
+
+				</div> 
+
+
+
+
+			    </div>
+			    <!-- /.page-header -->
+
+
+
+			    <!-- /.row --> 
+			</div>
+			<!-- /.page-content --> 
+		    </div>
+		</div>
+		<!-- /.main-content -->
+
+
+
+	    </div>
+	    <div class="footer">
+		<div class="footer-inner">
+		    <div class="footer-content">  </div>
+		</div>
+	    </div>
+
+	    <!-- /.main-container --> 
+
+
+
+	    <!--model end  -->
+
+	    <!--[if !IE]> -->
+
+
+	    <!-- <![endif]--> 
+
+	    <!--[if IE]>
+	    <script src="assets/js/jquery-1.11.3.min.js"></script>
+	    <![endif]--> 
+	    <script type="text/javascript">
+		if ('ontouchstart' in document.documentElement)
+		    document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+	    </script> 
+	    <script src="assets/js/bootstrap.min.js"></script> 
+
+	    <!-- page specific plugin scripts --> 
+
+	    <!--[if lte IE 8]>
+	    <script src="assets/js/excanvas.min.js"></script>
+	    <![endif]--> 
+	    <!--<script src="assets/js/jquery.dataTables.min.js"></script>-->
+	    <!--<script src="assets/js/jquery.dataTables.bootstrap.min.js"></script>-->
+	    <script src="assets/js/jquery-ui.custom.min.js"></script> 
+	    <script src="assets/js/jquery.ui.touch-punch.min.js"></script> 
+	    <script src="assets/js/jquery.easypiechart.min.js"></script> 
+	    <script src="assets/js/jquery.sparkline.index.min.js"></script> 
+	    <!--<script src="assets/js/jquery.flot.min.js"></script> -->
+	    <!--<script src="assets/js/jquery.flot.pie.min.js"></script>--> 
+	    <!--<script src="assets/js/jquery.flot.resize.min.js"></script> -->
+
+	    <!-- ace scripts --> 
+	    <script src="assets/js/ace-elements.min.js"></script> 
+	    <script src="assets/js/ace.min.js"></script> 
+
+
+
+	    <script src="bootstrap-sweetalert/lib/sweet-alert.min.js"></script>
+
+
+	    <script>
+		function session_des()
+		{
+		    //var user = $.session.get("user");
+		    //alert(user);	
+		    //$.session.clear();
+		    //document.location.href="http://yoursite.com"+ document.getElementById('somefield');
+
+		    location.href = "index.html";
+		}
+
+
+
+
+	    </script>
+	    <script>
+
+
+
+		$("#sync_full_stock").click(function () {
+
+		    var myDB = window.sqlitePlugin.openDatabase({name: "yasasiri.db", location: 'default'});
+		    myDB.transaction(function (transaction) {
+			transaction.executeSql('SELECT * FROM increment_inv', [], function (tx, results) {
+			    var len = results.rows.length, i;
+			    //alert(len);
+			    for (i = 0; i < len; i++) {
+
+				$("#hid_ref_id").val((results.rows.item(i).ref) + 1);
+				$("#hid_expire_id").val((results.rows.item(i).ref) + 1);
+				$("#hid_ref_second_id").val((results.rows.item(i).ref) + 1);
+				$("#hid_ref_second1_id").val((results.rows.item(i).ref) + 1);
+
+			    }
+			}, null);
+		    });
+
+
+		    myDB.transaction(function (transaction) {
+
+			transaction.executeSql("SELECT * FROM stock WHERE exp_flag=1 AND flag=5", [], function (tx, results) {
+			    var lenk = results.rows.length, e;
+
+			    for (e = 0; e < lenk; e++) {
+				var unit_cost = "0";
+				var dr_qty = "0";
+
+				var cr_qty = "0";
+
+				var ref_exp = $('#hid_expire_id').val();
+				var ref_exp_int = parseInt(ref_exp);
+				var ref_exp_out = (ref_exp_int + e);
+
+				var status = "0";
+				var s_price = "0";
+
+
+
+				var stock_card_new = results.rows.item(e).stock_card;
+				//alert(stock_card_new);
+
+
+				var stores = $.session.get("user_id");
+				var pprice = "0";
+				var unit_vat = "0";
+				var l_dis = "0";
+				var descrip = "full_stock_transfer_exp";
+				var line_dis = "0";
+				var unit_price = "0";
+				var tym = "0";
+				var foc = "0";
+				var flg = "0";
+				var r_price = "0";
+				var w_price = "0";
+				var br = "2";
+				var flag = "3";
+				var m_grd = "0";
+				var inv = "0";
+				var exp_qty = results.rows.item(e).expire;
+				var exp_qty_int = parseInt(exp_qty);
+				var expire = -exp_qty_int;
+				var exp_flag = "1";
+				var cus_id = "0";
+
+				//myDB.transaction(function (transaction) {
+				var executeQuery = "INSERT INTO stock (unit_cost, dr_qty, cr_qty,ref, status, s_price, stock_card,stores,p_price,unit_vat, l_dis, descrip, line_dis, unit_price, tym, foc, flg, r_price, w_price, br,flag,m_grd,inv,expire,exp_flag,cus_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				transaction.executeSql(executeQuery, [unit_cost, dr_qty, cr_qty, ref_exp_out, status, s_price, stock_card_new, stores, pprice, unit_vat, l_dis, descrip, line_dis, unit_price, tym, foc, flg, r_price, w_price, br, flag, m_grd, inv, expire, exp_flag, cus_id]
+					, function (tx, result) {
+
+
+					},
+					function (error) {
+					    swal("Something Went Wrong", "error when inserting stock entry data", "warning");
+					});
+
+				//});
+
+
+			    }
+			}, null);
+		    });
+
+
+		    //var myDB = window.sqlitePlugin.openDatabase({name: "lovedora.db", location: 'default'});
+		    myDB.transaction(function (transaction) {
+
+
+			transaction.executeSql("SELECT stock_card.id,stock_card.stock_card,stock_card.descrip,sum(stock.dr_qty) as dr, sum(stock.cr_qty) as cr FROM stock INNER JOIN stock_card ON stock.stock_card=stock_card.stock_card  GROUP BY stock.stock_card", [], function (tx, results) {
+			    var len = results.rows.length, i;
+
+			    for (i = 0; i < len; i++) {
+				var ref_id = $('#hid_ref_second_id').val();
+				var ref_id_int = parseInt(ref_id);
+
+				var ref_id_db1 = (ref_id_int + i);
+
+				var date_hid = $("#hid_date").val();
+				var date = date_hid;
+				//alert(date);
+				var sup_acc = "0";
+
+				var discount = "0";
+
+				var type = "stock_transfer";
+
+				var invoice = 0;
+
+				var login = "0";
+
+				var refid = ref_id_db1;
+
+
+				var p_order = "0";
+
+				var job = results.rows.item(i).descrip;
+
+				var cashier = "0";
+
+				var sales_return = "0";
+
+				var gatepass = "0";
+
+				var salemen = "0";
+
+
+
+				var loading = "0";
+
+				var unloading = "0";
+
+				var csh = "0";
+
+				var crdt = "0";
+
+				var sum_id = "0";
+
+
+
+				var dis_amt = "0";
+
+				var l_amt = "0";
+
+				var pro = "0";
+
+				var pack_no = "0";
+
+				var br = "2";
+				var agent_id = $.session.get("user_id");
+
+				var flag = "3";
+				var cus_id = "0";
+
+				var dr = results.rows.item(i).dr;
+				var cr = results.rows.item(i).cr;
+				var blance = dr - cr;
+				//alert(blance);
+
+
+				var total = 0;
+
+				var qty_data = blance;
+				var stock_card = results.rows.item(i).stock_card;
+
+				var cash = "0";
+				var cheque = "0";
+				var cheque_no = "0";
+				var cheque_date = "0";
+				var due = "0";
+				var bank = "0";
+
+
+				//var myDB = window.sqlitePlugin.openDatabase({name: "lovedora.db", location: 'default'});
+				//myDB.transaction(function (transaction) {
+				var executeQuery = "INSERT INTO stock_orders (date,sup_acc, discount, type, invoice,login,ref,p_order,job,cashier, sales_return, gatepass,salemen,loading,unloading, csh, crdt, sum_id,dis_amt, l_amt, pro, pack_no, br,agent_id,flag,cus_id ,total,qty,stock_card,cash ,cheque ,cheque_no ,cheque_date ,due,bank) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				transaction.executeSql(executeQuery, [date, sup_acc, discount, type, invoice, login, refid, p_order, job, cashier, sales_return, gatepass, salemen, loading, unloading, csh, crdt, sum_id, dis_amt, l_amt, pro, pack_no, br, agent_id, flag, cus_id, total, qty_data, stock_card, cash, cheque, cheque_no, cheque_date, due, bank]
+					, function (tx, result) {
+					    /*var ref_increment_sec = $('#hid_ref_second_id').val();
+					     var ref_int_sec = parseInt(ref_increment_sec);
+					     var ref_id_sec = (ref_int_sec + 1);
+					     $('#hid_ref_second_id').val(ref_id_sec);*/
+					},
+					function (error) {
+					    swal("Something Went Wrong", "error when inserting stock entry data", "warning");
+					});
+
+				//});
+
+
+			    }
+			}, null);
+		    });
+
+
+		    //var myDB = window.sqlitePlugin.openDatabase({name: "lovedora.db", location: 'default'});
+		    myDB.transaction(function (transaction) {
+
+			transaction.executeSql("SELECT stock_card.id,stock_card.stock_card,stock_card.descrip,sum(stock.dr_qty) as dr, sum(stock.cr_qty) as cr FROM stock INNER JOIN stock_card ON stock.stock_card=stock_card.stock_card  GROUP BY stock.stock_card", [], function (tx, results) {
+			    var lenj = results.rows.length, j;
+
+			    for (j = 0; j < lenj; j++) {
+				var unit_cost = "0";
+				var dr_qty = "0";
+
+				var dr = results.rows.item(j).dr;
+				var cr = results.rows.item(j).cr;
+				var blance = dr - cr;
+
+
+				var cr_qty = blance;
+
+				var ref = $('#hid_ref_second1_id').val();
+				var ref_id_db_int = parseInt(ref);
+				var ref_id_db2 = (ref_id_db_int + j);
+
+				var status = "0";
+				var s_price = "0";
+
+
+
+				var stock_card_new = results.rows.item(j).stock_card;
+				//alert(stock_card_new);
+
+
+				var stores = $.session.get("user_id");
+				var pprice = "0";
+				var unit_vat = "0";
+				var l_dis = "0";
+				var descrip = "full_stock_transfer";
+				var line_dis = "0";
+				var unit_price = "0";
+				var tym = "0";
+				var foc = "0";
+				var flg = "0";
+				var r_price = "0";
+				var w_price = "0";
+				var br = "2";
+				var flag = "3";
+				var m_grd = "0";
+				var inv = "0";
+				var expire = "0";
+				var exp_flag = "0";
+				var cus_id = "0";
+
+				//myDB.transaction(function (transaction) {
+				var executeQuery = "INSERT INTO stock (unit_cost, dr_qty, cr_qty,ref, status, s_price, stock_card,stores,p_price,unit_vat, l_dis, descrip, line_dis, unit_price, tym, foc, flg, r_price, w_price, br,flag,m_grd,inv,expire,exp_flag,cus_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				transaction.executeSql(executeQuery, [unit_cost, dr_qty, cr_qty, ref_id_db2, status, s_price, stock_card_new, stores, pprice, unit_vat, l_dis, descrip, line_dis, unit_price, tym, foc, flg, r_price, w_price, br, flag, m_grd, inv, expire, exp_flag, cus_id]
+					, function (tx, result) {
+					    /*var ref_increment_sec1 = $('#hid_ref_second1_id').val();
+					     var ref_int_sec1 = parseInt(ref_increment_sec1);
+					     var ref_id_sec1 = (ref_int_sec1 + 1);
+					     $('#hid_ref_second1_id').val(ref_id_sec1);*/
+					    if (j == lenj) {
+						var ref_final = $('#hid_ref_second1_id').val();
+						var ref_id_db_intf = parseInt(ref_final);
+						var ref_id_db2f = (ref_id_db_intf + j);
+
+						//myDB.transaction(function (transaction) {
+						var executeQuery = "UPDATE increment_inv SET ref=?";
+						transaction.executeSql(executeQuery, [ref_id_db2f],
+							function (tx, result) {
+							    swal("Added", "Successfully Synced", "success");
+							},
+							function (error) {
+							    swal("Something Went Wrong", "error when getting data", "warning");
+							});
+
+						//});
+
+
+					    }
+
+					},
+					function (error) {
+					    swal("Something Went Wrong", "error when inserting stock entry data", "warning");
+					});
+
+				//});
+
+
+			    }
+			}, null);
+		    });
+
+
+
+
+		});
+
+	    </script>
+	</body>
+
+
+    </html>
